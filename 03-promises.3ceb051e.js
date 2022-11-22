@@ -1,0 +1,2 @@
+function e(e){console.log(e)}({formEl:document.querySelector("form")}).formEl.addEventListener("submit",(t=>{t.preventDefault();!function(e,t,l,n){let r,a=0;setTimeout((()=>{r=setInterval((()=>{n(+e+a++*+t),a===+l&&clearInterval(r)}),t)}),e)}(t.target.elements.delay.value,t.target.elements.step.value,t.target.elements.amount.value,e),t.target.reset()}));
+//# sourceMappingURL=03-promises.3ceb051e.js.map

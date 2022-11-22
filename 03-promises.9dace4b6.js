@@ -1,0 +1,2 @@
+!function(){function e(e){console.log(e)}({formEl:document.querySelector("form")}).formEl.addEventListener("submit",(function(t){t.preventDefault();var n,l,r,a,o,u,m=t.target.elements.delay.value,s=t.target.elements.step.value,c=t.target.elements.amount.value;n=m,l=s,r=c,a=e,u=0,setTimeout((function(){o=setInterval((function(){a(+n+u++*+l),u===+r&&clearInterval(o)}),l)}),n),t.target.reset()}))}();
+//# sourceMappingURL=03-promises.9dace4b6.js.map
