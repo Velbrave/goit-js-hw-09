@@ -36,3 +36,21 @@ img {
   text-align: center;
   line-height: normal;
 }
+
+.form {
+  display: flex;
+  column-gap: 10px;
+}
+
+.form-label {
+  display: grid;
+  width: 200px;
+}
+.form-label_input {
+  height: 30px;
+}
+
+.form-btn {
+  height: 30px;
+  margin-top: 25px;
+}

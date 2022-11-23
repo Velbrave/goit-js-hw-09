@@ -1,57 +1,48 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 const refs = {
   formEl: document.querySelector('form'),
-}
+};
 
-refs.formEl.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const firstDelay = event.target.elements.delay.value;
-  const delayStep = event.target.elements.step.value;
-  const countElement = event.target.elements.amount.value;
-  foo(firstDelay, delayStep, countElement, myCallback);
+refs.formEl.addEventListener('submit', onSubmitForm);
+
+  function onSubmitForm(event){
+    event.preventDefault();
+    
+  let delay = Number(event.target.elements.delay.value);
+  const step = Number(event.target.elements.step.value);
+  const amount = Number(event.target.elements.amount.value);
+
   event.target.reset();
-})
 
-function myCallback(message) {
-  console.log(message);
+  for (let position = 1; position <= amount; position += 1) {
+    createPromise(position, delay)
+      .then(({ position, delay }) => {
+        setTimeout(() => {
+          Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, {
+            useIcon: false,
+          });
+        }, delay);
+      })
+      .catch(({ position, delay }) => {
+        setTimeout(() => {
+          Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, {
+            useIcon: false,
+          });
+        }, delay);
+      });
+    delay += step;
+  }
+};
+
+function createPromise(position, delay) {
+  const shouldResolve = Math.random() > 0.3;
+  const objectPromise = { position, delay };
+
+  return new Promise((resolve, reject) => {
+    if (shouldResolve) {
+      resolve(objectPromise);
+    }
+    reject(objectPromise);
+  });
 }
-
-// function foo(delay, delayStep, count, callback) {
-//   setTimeout(() => {
-//     for (let i = 0; i < count; i++) {
-//       setTimeout(() => { callback(i); }, i * delayStep);
-      
-//     }
-//   }, delay);
-// }
-
-function foo(delay, step, element, callback) {
-  let count = 0;
-  let id;
-  setTimeout(() => {
-    id = setInterval(() => {
-      callback(+delay + count++ * +step);
-      if (count === +element) { clearInterval(id); }
-    },step);
-  }, delay);
-}
-
-
-
-
-
-// function createPromise(position, delay) {
-//   const shouldResolve = Math.random() > 0.3;
-//   if (shouldResolve) {
-//     // Fulfill
-//   } else {
-//     // Reject
-//   }
-// }
-
-// createPromise(2, 1500)
-//   .then(({ position, delay }) => {
-//     console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-//   })
-//   .catch(({ position, delay }) => {
-//     console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-//   });
